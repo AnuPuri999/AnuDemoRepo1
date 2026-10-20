@@ -1,0 +1,15 @@
+{
+	"name": "ADFDemoAnupuri",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "dbf8c5fa-b067-452f-ada5-a4eff08165ea",
+		"tenantId": "f19fc159-83bc-4eb4-826e-2eca0e6c900e"
+	}
+}

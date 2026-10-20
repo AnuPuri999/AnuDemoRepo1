@@ -1,0 +1,28 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "EmpOct19",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false) ~> EmpOct19",
+					"dataset": {
+						"referenceName": "EmpOct19",
+						"type": "DatasetReference"
+					}
+				},
+				{
+					"name": "DepartmentDataset",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DepartmentDataset",
+					"dataset": {
+						"referenceName": "DepartmentDataset",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared EmpOct19 = let AdfDoc = AzureStorage.BlobContents(\"https://storagedemoanu.blob.core.windows.net/adfdemo/NewINPUT/employees_Oct19.csv\"),Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]), PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]) in  PromotedHeaders;\r\nshared UserQuery = let Source = #\"EmpOct19\",\r\n  #\"Changed column type\" = Table.TransformColumnTypes(Source, {{\"salary\", Int64.Type}, {\"id\", Int64.Type}}),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Changed column type\", {\"name\"}, EmpOct19, {\"name\"}, \"EmpOct19\", JoinKind.LeftOuter),\r\n  #\"Expanded EmpOct19\" = Table.ExpandTableColumn(#\"Merged queries\", \"EmpOct19\", {\"id\", \"name\", \"gender\", \"salary\", \"department\"}, {\"id.1\", \"name.1\", \"gender.1\", \"salary.1\", \"department.1\"}) in #\"Expanded EmpOct19\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}

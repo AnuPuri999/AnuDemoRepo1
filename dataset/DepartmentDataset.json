@@ -1,0 +1,34 @@
+{
+	"name": "DepartmentDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedServiceStorage_Anu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Department.csv",
+				"folderPath": "NewINPUT",
+				"container": "adfdemo"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "DeptId",
+				"type": "String"
+			},
+			{
+				"name": "DeptName",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
